@@ -31,10 +31,11 @@ docker-compose run -rm -e RAILS_ENV=test -e DATABASE_URL="postgresql://postgres:
 docker-compose run -rm -e RAILS_ENV=test -e DATABASE_URL="postgresql://postgres:password@db:5432/entregis_test" web bundle exec rspec
 
 
-`Deploy`
+`Setup`
 
 heroku create entregis --manifest
-git push heroku master
-
-
 docker-compose run -e EDITOR=vi web rails credentials:edit && heroku config:set RAILS_MASTER_KEY=`cat config/master.key` -a entregis
+
+bundle exec rails db:gis:setup
+
+git push heroku master

@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+gem 'activerecord-postgis-adapter'
 gem 'dry-monads'
 gem 'dry-rails'
 gem 'pg', '>= 0.18', '< 2.0'
