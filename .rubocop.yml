@@ -1,0 +1,20 @@
+AllCops:
+  TargetRubyVersion: 2.7
+  NewCops: enable
+
+
+  Exclude:
+    - 'Rakefile'
+    - 'bin/*'
+    - 'tmp/*'
+    - 'db/*'
+    - 'vendor/**/*'
+
+Layout/LineLength:
+  Max: 90
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false

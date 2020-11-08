@@ -15,7 +15,9 @@ module SerializerMatchers
     end
 
     define_method :match_has_many do |result|
-      result && @associations[expected].instance_of?(ActiveModel::Serializer::HasManyReflection)
+      result && @associations[expected].instance_of?(
+        ActiveModel::Serializer::HasManyReflection
+      )
     end
 
     define_method :match_serializer do |result|

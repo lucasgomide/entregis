@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails', '~> 5.2.3'
+gem 'dry-monads'
+gem 'dry-rails'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
+gem 'rails', '~> 5.2.3'
 gem 'redis'
-gem 'dry-rails'
-gem 'dry-monads'
 
 group :development, :test do
   gem 'pry-byebug'
@@ -19,8 +19,8 @@ group :development do
 end
 
 group :test do
-  gem 'rspec-rails'
-  gem 'rspec-its'
-  gem 'webmock'
   gem 'factory_bot_rails'
+  gem 'rspec-its'
+  gem 'rspec-rails'
+  gem 'webmock'
 end

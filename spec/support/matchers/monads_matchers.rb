@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/AbcSize
+
 RSpec::Matchers.define :be_success_with do |expected|
   match do |actual|
     actual.value_or(nil) == expected
@@ -73,3 +75,4 @@ RSpec::Matchers.define :be_failed_with do |expected|
     actual.failure == expected
   end
 end
+# rubocop:enable Metrics/AbcSize

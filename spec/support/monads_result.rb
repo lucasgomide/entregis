@@ -28,7 +28,7 @@ module MonadsResult
         key.failure('failure') unless success
       end
     end.new
-    schema.(success: success).to_monad
+    schema.call(success: success).to_monad
   end
 end
 

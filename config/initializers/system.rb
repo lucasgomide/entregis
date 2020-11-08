@@ -6,9 +6,9 @@ Dry::Rails.container do
 
   config.root = (Pathname.pwd + 'app')
 
-  custom_paths = [
-    'operations',
-    'contracts',
+  custom_paths = %w[
+    operations
+    contracts
   ]
 
   auto_register!(*custom_paths)
