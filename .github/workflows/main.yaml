@@ -1,0 +1,89 @@
+name: Github CI
+
+on:
+  pull_request:
+    branches:
+      - '**'
+  push:
+    branches:
+      - master
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Ruby 2.7
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+
+      - name: Install bundler
+        run: gem install bundler
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install libpq-dev libcurl4-openssl-dev
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+      - name: Lint with rubocop
+        run: bundle exec rubocop
+
+  unit:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: kartoza/postgis:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Set up Ruby 2.7
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+
+      - name: Install bundler
+        run: gem install bundler
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install libpq-dev libcurl4-openssl-dev
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+      - name: Prepare for test
+        run: |
+          bundle exec rails db:create db:schema:load
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/entregis
+
+      - name: Unit test with Rspec test suite
+        run: bundle exec rspec --format progress --profile
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/entregis
