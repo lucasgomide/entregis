@@ -1,0 +1,22 @@
+version: '3'
+services:
+  db:
+    image: kartoza/postgis:latest
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - .:/var/lib/postgresql/data
+  web:
+    build: .
+    command: bundle exec puma -C config/puma.rb
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+    environment:
+      DATABASE_URL: postgresql://postgres:password@db:5432/entregis

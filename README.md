@@ -22,3 +22,10 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+
+`Testing`
+
+docker-compose run -rm -e RAILS_ENV=test -e DATABASE_URL="postgresql://postgres:password@db:5432/entregis_test" web bundle exec rails db:create
+
+docker-compose run -rm -e RAILS_ENV=test -e DATABASE_URL="postgresql://postgres:password@db:5432/entregis_test" web bundle exec rspec
