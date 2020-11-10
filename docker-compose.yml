@@ -22,4 +22,3 @@ services:
     environment:
       DATABASE_URL: postgis://postgres:password@db:5432/entregis
       BUNDLE_PATH: /bundle/vendor
-
