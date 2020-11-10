@@ -24,5 +24,6 @@ group :test do
   gem 'factory_bot_rails'
   gem 'rspec-its'
   gem 'rspec-rails'
+  gem 'shoulda-matchers'
   gem 'webmock'
 end
