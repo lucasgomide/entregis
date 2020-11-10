@@ -1,4 +1,6 @@
 class FreightItem < ApplicationRecord
+  has_paper_trail
+
   belongs_to :freight
 
   validates :cubic_meters, :weight, presence: true

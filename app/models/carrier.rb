@@ -1,4 +1,6 @@
 class Carrier < ApplicationRecord
+  has_paper_trail
+
   belongs_to :shipping_carrier
   belongs_to :vehicle
 
