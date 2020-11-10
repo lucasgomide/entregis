@@ -211,6 +211,8 @@ GEM
     rgeo-activerecord (6.2.1)
       activerecord (>= 5.0)
       rgeo (>= 1.0.0)
+    rgeo-geojson (2.1.1)
+      rgeo (>= 1.0.0)
     rspec-core (3.9.2)
       rspec-support (~> 3.9.3)
     rspec-expectations (3.9.2)
@@ -289,6 +291,7 @@ DEPENDENCIES
   puma (~> 3.11)
   rails (~> 5.2.3)
   redis
+  rgeo-geojson
   rspec-its
   rspec-rails
   rubocop-rails
