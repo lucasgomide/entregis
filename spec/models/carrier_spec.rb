@@ -1,4 +1,5 @@
 RSpec.describe Carrier, type: :model do
+  it { is_expected.to be_versioned }
   it { is_expected.to belong_to(:shipping_carrier) }
   it { is_expected.to belong_to(:vehicle) }
   it { is_expected.to validate_presence_of(:current_location) }

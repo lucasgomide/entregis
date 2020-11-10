@@ -1,4 +1,6 @@
 class Shippment < ApplicationRecord
+  has_paper_trail
+
   belongs_to :customer
   belongs_to :freight
   belongs_to :carrier
