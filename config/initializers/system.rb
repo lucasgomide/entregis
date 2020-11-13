@@ -1,3 +1,5 @@
+require 'dry/matcher/result_matcher'
+
 Dry::Rails.container do
   config.features = %i[
     application_contract

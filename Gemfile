@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'activerecord-postgis-adapter'
+gem 'dry-matcher'
 gem 'dry-monads'
 gem 'dry-rails'
 gem 'money-rails'
