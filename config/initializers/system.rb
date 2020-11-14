@@ -11,6 +11,7 @@ Dry::Rails.container do
   custom_paths = %w[
     operations
     contracts
+    filters
   ]
 
   auto_register!(*custom_paths)
