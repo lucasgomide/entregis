@@ -4,6 +4,7 @@ Dry::Rails.container do
   config.features = %i[
     application_contract
     safe_params
+    controller_helpers
   ]
 
   config.root = (Pathname.pwd + 'app')
@@ -12,6 +13,7 @@ Dry::Rails.container do
     operations
     contracts
     filters
+    factories
   ]
 
   auto_register!(*custom_paths)
