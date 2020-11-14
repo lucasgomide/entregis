@@ -2,11 +2,13 @@
 
 RSpec.describe V1::ShippingCarriersController, type: :controller do
   let(:list) { instance_spy(ShippingCarriers::ListOperation) }
+  let(:detail) { instance_spy(ShippingCarriers::DetailOperation) }
 
   let(:error_factory) { instance_spy(ErrorFactory) }
 
   let(:app_container_stubs) do
     Entregis::Container.stub('shipping_carriers.list_operation', list)
+    Entregis::Container.stub('shipping_carriers.detail_operation', detail)
     Entregis::Container.stub('error_factory', error_factory)
   end
 
@@ -54,6 +56,51 @@ RSpec.describe V1::ShippingCarriersController, type: :controller do
       end
 
       it { is_expected.to have_http_status(:bad_request) }
+    end
+  end
+
+  describe 'GET show' do
+    subject(:get_show) { get :show, params: params, format: :json }
+    let(:params) { { 'id': resource.id.to_s } }
+    let(:resource) { create(:shipping_carrier) }
+
+    before do
+      allow(detail).to receive(:call).and_return(result)
+    end
+
+    context 'rendered with successful' do
+      let(:result) { success(resource) }
+
+      it { is_expected.to have_http_status(:ok) }
+
+      it do
+        is_expected.to serialize_object(resource)
+          .with(V1::ShippingCarrierSerializer)
+      end
+
+      it do
+        get_show
+        expect(detail).to have_received(:call).with(params)
+      end
+    end
+
+    context 'rendered with error' do
+      let(:result) { failure('error') }
+      let(:error) do
+        Error.new(status: :not_found, errors: { messages: { key: ['error'] } })
+      end
+
+      before do
+        allow(error_factory).to receive(:from_object).and_return(error)
+      end
+
+      it do
+        is_expected.to serialize_object(error).with(
+          ActiveModel::Serializer::ErrorSerializer
+        )
+      end
+
+      it { is_expected.to have_http_status(:not_found) }
     end
   end
 end
