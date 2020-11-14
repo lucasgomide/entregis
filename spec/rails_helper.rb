@@ -74,4 +74,8 @@ RSpec.configure do |config|
   %i[operation controllers contract].each do |type|
     config.include_context 'with container_stubs', include_shared: true, type: type
   end
+
+  config.include_context 'with controller_container_stubs',
+                         include_shared: true,
+                         type: :controller
 end
