@@ -14,6 +14,8 @@ RSpec.describe ErrorFactory do
       let(:expected_message) { { name: ["can't be blank"] } }
 
       its(:'errors.messages') { is_expected.to eql(expected_message) }
+      its(:status) { is_expected.to eql(:bad_request) }
+
       it { is_expected.to be_an_instance_of(Error) }
     end
 
@@ -29,6 +31,18 @@ RSpec.describe ErrorFactory do
       let(:expected_message) { { country: ['is missing'] } }
 
       its(:'errors.messages') { is_expected.to eql(expected_message) }
+      its(:status) { is_expected.to eql(:bad_request) }
+
+      it { is_expected.to be_an_instance_of(Error) }
+    end
+
+    context 'when the object is a ActiveRecord::RecordNotFound' do
+      let(:object) { ActiveRecord::RecordNotFound.new('not found x') }
+      let(:expected_message) { { id: ['not found x'] } }
+
+      its(:'errors.messages') { is_expected.to eql(expected_message) }
+      its(:status) { is_expected.to eql(:not_found) }
+
       it { is_expected.to be_an_instance_of(Error) }
     end
   end

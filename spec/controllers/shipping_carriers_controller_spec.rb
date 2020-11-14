@@ -40,7 +40,9 @@ RSpec.describe V1::ShippingCarriersController, type: :controller do
 
     context 'rendered with error' do
       let(:result) { failure('error') }
-      let(:error) { Error.new(errors: { messages: { key: ['error'] } }) }
+      let(:error) do
+        Error.new(status: :bad_request, errors: { messages: { key: ['error'] } })
+      end
 
       before do
         allow(error_factory).to receive(:from_object).and_return(error)
