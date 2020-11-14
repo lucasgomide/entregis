@@ -6,8 +6,12 @@ RSpec.describe PaginateFilter, type: :filters do
 
     context 'paginate with default attributes' do
       let(:input) { {} }
-      its(:'success.limit_value') { is_expected.to eql(PaginateFilter::DEFAULT_PAGE_SIZE) }
-      its(:'success.current_page') { is_expected.to eql(PaginateFilter::DEFAULT_PAGE) }
+      its(:'success.limit_value') do
+        is_expected.to eql(PaginateFilter::DEFAULT_PAGE_SIZE)
+      end
+      its(:'success.current_page') do
+        is_expected.to eql(PaginateFilter::DEFAULT_PAGE)
+      end
     end
 
     context 'paginate with provided attributes' do
