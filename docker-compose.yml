@@ -16,9 +16,11 @@ services:
       - db
     volumes:
       - .:/app
-      - .:/bundle
+      - bundle_path:/bundle
     ports:
       - 3000:3000
     environment:
       DATABASE_URL: postgis://postgres:password@db:5432/entregis
       BUNDLE_PATH: /bundle/vendor
+volumes:
+  bundle_path:
