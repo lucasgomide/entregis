@@ -70,9 +70,4 @@ RSpec::Matchers.define :be_none do |_expected|
   match(&:none?)
 end
 
-RSpec::Matchers.define :be_failed_with do |expected|
-  match do |actual|
-    actual.failure == expected
-  end
-end
 # rubocop:enable Metrics/AbcSize
