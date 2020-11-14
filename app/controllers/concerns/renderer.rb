@@ -6,7 +6,7 @@ module Renderer
   extend ActiveSupport::Concern
 
   def render_invalid(object)
-    render_error(object, :bad_request)
+    render_error(object)
   end
 
   def render_success(result)
@@ -15,9 +15,11 @@ module Renderer
 
   private
 
-  def render_error(error, status = :bad_request)
-    render json: resolve('error_factory').from_object(error),
-           status: status,
+  def render_error(object)
+    error = resolve('error_factory').from_object(object)
+
+    render json: error,
+           status: error.status,
            adapter: :json_api,
            serializer: ActiveModel::Serializer::ErrorSerializer
   end
