@@ -142,3 +142,38 @@ RSpec.shared_examples 'POST create resource' do
     it { is_expected.to have_http_status(:bad_request) }
   end
 end
+
+RSpec.shared_examples 'DELETE destroy resource' do
+  context 'rendered with successful' do
+    let(:result) { success(resource) }
+
+    it { is_expected.to have_http_status(:ok) }
+
+    it do
+      is_expected.to serialize_object(resource).with(serializer)
+    end
+
+    it do
+      subject
+      expect(destroy_operation).to have_received(:call).with(params)
+    end
+  end
+
+  context 'rendered with error' do
+    let(:result) { failure('error') }
+    let(:error) do
+      Error.new(status: :bad_request, errors: { messages: { key: ['error'] } })
+    end
+
+    before do
+      allow(error_factory).to receive(:from_object).and_return(error)
+    end
+
+    it do
+      is_expected.to serialize_object(error)
+        .with(ActiveModel::Serializer::ErrorSerializer)
+    end
+
+    it { is_expected.to have_http_status(:bad_request) }
+  end
+end
