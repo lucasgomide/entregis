@@ -13,6 +13,10 @@ module Renderer
     render json: result
   end
 
+  def render_created(result)
+    render json: result, status: :created
+  end
+
   private
 
   def render_error(object)
