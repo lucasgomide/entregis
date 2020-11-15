@@ -2,7 +2,7 @@ module ShippingCarriers
   class UpdatingContract < ApplicationContract
     params(
       ShippingCarriers::CreationContract.schema,
-      BaseUpdatingContract.schema
+      PrimaryKeyContract.schema
     )
   end
 end
