@@ -1,9 +1,9 @@
 module ShippingCarriers
   class DetailOperation
-    include Dry::Monads[:try]
+    include BaseDetailOperation
 
-    def call(input)
-      Try[ActiveRecord::RecordNotFound] { ShippingCarrier.find(input[:id]) }
+    def model
+      ShippingCarrier
     end
   end
 end
