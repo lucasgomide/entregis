@@ -36,6 +36,7 @@ RSpec.describe V1::ShippingCarriersController, type: :controller do
     let(:params) { { 'id': resource.id.to_s } }
     let(:resource) { create(:shipping_carrier, :with_carriers) }
     let(:serializer) { V1::ShippingCarrierSerializer }
+    let(:included) { ['carriers'] }
 
     before do
       allow(detail_operation).to receive(:call).and_return(result)
