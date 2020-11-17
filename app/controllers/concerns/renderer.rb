@@ -9,8 +9,8 @@ module Renderer
     render_error(object)
   end
 
-  def render_success(result)
-    render json: result
+  def render_success(result, args = {})
+    render json: result, **args
   end
 
   def render_created(result)

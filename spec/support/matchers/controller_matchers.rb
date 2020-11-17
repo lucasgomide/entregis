@@ -24,18 +24,23 @@ module ControllerMatchers
       add_serializer(serializer_klass, options)
     end
 
+    chain :including do |args|
+      @include = args
+    end
+
     failure_message do |actual|
       "expected that #{actual.body} would be eq #{@result}"
     end
 
-    def add_serializer(serializer_klass, _options = {})
-      @options = {}
+    def add_serializer(serializer_klass, options = {})
+      @options = options
       @serializer_klass = serializer_klass
     end
 
     def serialize(expected)
       serializer_key = @collection ? :each_serializer : :serializer
       @options[serializer_key] = @serializer_klass
+      @options[:include] = @include
 
       ActiveModelSerializers::SerializableResource.new(expected, @options)
                                                   .serializable_hash
