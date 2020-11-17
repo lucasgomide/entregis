@@ -42,6 +42,7 @@ RSpec.shared_examples 'GET show resource' do
     it do
       is_expected.to serialize_object(resource)
         .with(serializer)
+        .including(['carriers'])
     end
 
     it do

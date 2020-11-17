@@ -12,8 +12,10 @@ module V1
     end
 
     def show
+      success = ->(body) { render_success(body, include: ['carriers']) }
+
       operation do |m|
-        m.success(&method(:render_success))
+        m.success(&success)
         m.failure(&method(:render_invalid))
       end
     end

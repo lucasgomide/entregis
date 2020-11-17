@@ -2,7 +2,7 @@
 # It's beign used on factories.
 
 module RgeoJsonHelpers
-  def coordiantes_to_wkt(coordinates, type = 'Point')
+  def self.coordiantes_to_wkt(coordinates, type = 'Point')
     RGeo::GeoJSON.decode({
       type: type,
       coordinates: coordinates
