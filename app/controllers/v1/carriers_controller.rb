@@ -22,5 +22,12 @@ module V1
         m.failure(&method(:render_invalid))
       end
     end
+
+    def update
+      operation do |m|
+        m.success(&method(:render_success))
+        m.failure(&method(:render_invalid))
+      end
+    end
   end
 end
