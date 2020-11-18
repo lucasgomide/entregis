@@ -59,7 +59,7 @@ RSpec.describe V1::ShippingCarriersController, type: :controller do
   end
 
   describe 'POST create' do
-    subject(:put_update) { post :create, params: params, format: :json }
+    subject(:post_create) { post :create, params: params, format: :json }
     let(:params) { { 'name': 'first name' } }
     let(:serializer) { V1::ShippingCarrierSerializer }
     let(:resource) { create(:shipping_carrier) }

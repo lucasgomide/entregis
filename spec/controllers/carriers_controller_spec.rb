@@ -4,6 +4,7 @@ RSpec.describe V1::CarriersController, type: :controller do
   let(:list_operation) { instance_spy(Carriers::ListOperation) }
   let(:detail_operation) { instance_spy(Carriers::DetailOperation) }
   let(:create_operation) { instance_spy(Carriers::CreateOperation) }
+  let(:update_operation) { instance_spy(Carriers::UpdateOperation) }
 
   let(:error_factory) { instance_spy(ErrorFactory) }
 
@@ -11,6 +12,7 @@ RSpec.describe V1::CarriersController, type: :controller do
     Entregis::Container.stub('carriers.list_operation', list_operation)
     Entregis::Container.stub('carriers.detail_operation', detail_operation)
     Entregis::Container.stub('carriers.create_operation', create_operation)
+    Entregis::Container.stub('carriers.update_operation', update_operation)
     Entregis::Container.stub('error_factory', error_factory)
   end
 
@@ -51,5 +53,18 @@ RSpec.describe V1::CarriersController, type: :controller do
     end
 
     include_examples 'POST create resource'
+  end
+
+  describe 'PUT update' do
+    subject(:put_update) { put :update, params: params, format: :json }
+    let(:params) { { 'shipping_carrier_id': '1', 'id': '1' } }
+    let(:resource) { create(:carrier) }
+    let(:serializer) { V1::CarrierSerializer }
+
+    before do
+      allow(update_operation).to receive(:call).and_return(result)
+    end
+
+    include_examples 'PUT update resource'
   end
 end
