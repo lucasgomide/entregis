@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_16_230438) do
+ActiveRecord::Schema.define(version: 2020_11_18_212932) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,8 +42,8 @@ ActiveRecord::Schema.define(version: 2020_11_16_230438) do
   end
 
   create_table "freight_items", force: :cascade do |t|
-    t.integer "cubic_meters", null: false
-    t.integer "weight", null: false
+    t.float "cubic_meters", null: false
+    t.float "weight", null: false
     t.bigint "freight_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -53,8 +53,8 @@ ActiveRecord::Schema.define(version: 2020_11_16_230438) do
   create_table "freights", force: :cascade do |t|
     t.geography "origin", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}, null: false
     t.geography "destination", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}, null: false
-    t.integer "cubic_meters_total", null: false
-    t.integer "weight_total", null: false
+    t.float "cubic_meters_total", null: false
+    t.float "weight_total", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["destination"], name: "index_freights_on_destination", using: :gist
