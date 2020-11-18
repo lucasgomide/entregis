@@ -3,8 +3,7 @@ module Carriers
     # This contract has the same attributes of CreationContract.
     # Althought all fields are optionals
 
-    params(PrimaryKeyContract.schema) do
-      optional(:shipping_carrier_id).value(:integer)
+    params(DeletingContract.schema) do
       optional(:current_location).filled(Types::Point)
       optional(:vehicle_id).value(:integer)
       optional(:status).value(included_in?: Carrier.statuses.keys)
