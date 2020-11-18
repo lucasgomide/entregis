@@ -36,12 +36,22 @@ RSpec.describe ErrorFactory do
       it { is_expected.to be_an_instance_of(Error) }
     end
 
-    context 'when the object is a ActiveRecord::RecordNotFound' do
+    context 'when the object is an ActiveRecord::RecordNotFound' do
       let(:object) { ActiveRecord::RecordNotFound.new('not found x') }
       let(:expected_message) { { id: ['not found x'] } }
 
       its(:'errors.messages') { is_expected.to eql(expected_message) }
       its(:status) { is_expected.to eql(:not_found) }
+
+      it { is_expected.to be_an_instance_of(Error) }
+    end
+
+    context 'when the object is a RGeo::Error::InvalidGeometry' do
+      let(:object) { RGeo::Error::InvalidGeometry.new('not found x') }
+      let(:expected_message) { { invalid_geometry: ['not found x'] } }
+
+      its(:'errors.messages') { is_expected.to eql(expected_message) }
+      its(:status) { is_expected.to eql(:bad_request) }
 
       it { is_expected.to be_an_instance_of(Error) }
     end

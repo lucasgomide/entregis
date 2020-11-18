@@ -1,7 +1,3 @@
-module Types
-  include Dry.Types()
-end
-
 class Error < Dry::Struct
   include Types
 

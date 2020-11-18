@@ -7,7 +7,7 @@ module V1
     end
 
     def coverage_area
-      object.coverage_area.coordinates
+      object.coverage_area&.coordinates
     end
   end
 end
