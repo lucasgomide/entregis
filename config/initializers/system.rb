@@ -10,6 +10,7 @@ Dry::Rails.container do
   config.root = (Pathname.pwd + 'app')
 
   custom_paths = %w[
+    builders
     operations
     contracts
     filters

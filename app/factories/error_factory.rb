@@ -2,7 +2,8 @@ class ErrorFactory
   ERRORS_RESOLVERS = {
     'Dry::Validation::Result' => ->(it) { it.errors.to_h },
     'ActiveRecord::RecordInvalid' => ->(it) { it.record.errors.messages },
-    'ActiveRecord::RecordNotFound' => ->(it) { { id: [it.message] } }
+    'ActiveRecord::RecordNotFound' => ->(it) { { id: [it.message] } },
+    'RGeo::Error::InvalidGeometry' => ->(it) { { invalid_geometry: [it.message] } }
   }.freeze
 
   STATUS_ERROR = {
