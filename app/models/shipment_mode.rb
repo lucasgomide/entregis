@@ -3,4 +3,6 @@ class ShipmentMode < ApplicationRecord
 
   validates :name, :cube_factor, presence: true
   validates :cube_factor, numericality: { greater_than: 0 }
+
+  has_many :vehicles
 end
