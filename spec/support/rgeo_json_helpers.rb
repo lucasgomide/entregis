@@ -2,10 +2,16 @@
 # It's beign used on factories.
 
 module RgeoJsonHelpers
-  def self.coordiantes_to_wkt(coordinates, type = 'Point')
+  def coordiantes_to_wkt(coordinates, type = 'Point')
     RGeo::GeoJSON.decode({
       type: type,
       coordinates: coordinates
-    }.to_json).to_s
+    }.to_json)
   end
 end
+
+RSpec.configure do |config|
+  config.include RgeoJsonHelpers
+end
+
+FactoryBot::SyntaxRunner.include(RgeoJsonHelpers)
