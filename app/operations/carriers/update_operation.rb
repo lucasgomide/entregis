@@ -14,6 +14,9 @@ module Carriers
       contract = (yield validate(input)).to_h
       resource = yield find_resource(contract)
       params = yield builder.from_params(contract).build_attributes
+
+      # Should allow to update a carrier's vehicle when it is
+      # not available or in full capacity?
       update(resource, params.except(:id))
     end
 

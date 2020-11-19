@@ -16,6 +16,7 @@ RSpec.describe Carriers::UpdateOperation, type: :operation do
         id: resource.id,
         status: 'busy',
         current_location: [3.4, 2.0],
+        available_payload: 1,
         ignored_param: false
       }
     end
@@ -83,6 +84,11 @@ RSpec.describe Carriers::UpdateOperation, type: :operation do
       it do
         expect { call }.to change { resource.reload.current_location.coordinates }
           .to(input[:current_location])
+      end
+
+      it do
+        expect { call }.to change { resource.reload.available_payload }
+          .to(input[:available_payload])
       end
     end
   end
