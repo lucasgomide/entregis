@@ -37,6 +37,8 @@ FactoryBot.define do
     vehicle { create(:vehicle) }
     km_price_cents { 1000 }
     weight_price_cents { 1000 }
+    available_cubic_meters { 1000 }
+    available_payload { 1000 }
 
     trait :available do
       status { 'available' }
