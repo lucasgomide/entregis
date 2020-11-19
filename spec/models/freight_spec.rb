@@ -4,6 +4,7 @@ RSpec.describe Freight, type: :model do
   it { is_expected.to validate_presence_of(:destination) }
   it { is_expected.to validate_presence_of(:cubic_meters_total) }
   it { is_expected.to validate_presence_of(:weight_total) }
+  it { is_expected.to have_many(:items) }
 
   it do
     is_expected.to validate_numericality_of(:cubic_meters_total)
