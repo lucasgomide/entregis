@@ -6,6 +6,8 @@ RSpec.describe Carrier, type: :model do
   it { is_expected.to validate_presence_of(:status) }
   it { is_expected.to validate_presence_of(:km_price_cents) }
   it { is_expected.to validate_presence_of(:weight_price_cents) }
+  it { is_expected.to validate_presence_of(:available_cubic_meters) }
+  it { is_expected.to validate_presence_of(:available_payload) }
 
   it { is_expected.to monetize(:km_price_cents) }
   it { is_expected.to monetize(:weight_price_cents) }

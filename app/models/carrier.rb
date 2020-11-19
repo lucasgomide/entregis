@@ -13,5 +13,6 @@ class Carrier < ApplicationRecord
   }
 
   validates :current_location, :status, :km_price_cents,
-            :weight_price_cents, presence: true
+            :weight_price_cents, :available_cubic_meters,
+            :available_payload, presence: true
 end
