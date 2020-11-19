@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_18_212932) do
+ActiveRecord::Schema.define(version: 2020_11_19_222425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(version: 2020_11_18_212932) do
     t.bigint "vehicle_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "available_cubic_meters", null: false
+    t.float "available_payload", null: false
     t.index ["coverage_area"], name: "index_carriers_on_coverage_area", using: :gist
     t.index ["current_location"], name: "index_carriers_on_current_location", using: :gist
     t.index ["shipping_carrier_id"], name: "index_carriers_on_shipping_carrier_id"
@@ -92,8 +94,8 @@ ActiveRecord::Schema.define(version: 2020_11_18_212932) do
 
   create_table "vehicles", force: :cascade do |t|
     t.string "name", null: false
-    t.integer "cubic_meters_capacity", null: false
-    t.integer "payload_capacity", null: false
+    t.float "cubic_meters_capacity", null: false
+    t.float "payload_capacity", null: false
     t.bigint "shipment_mode_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
