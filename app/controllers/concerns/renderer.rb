@@ -13,8 +13,8 @@ module Renderer
     render json: result, **args
   end
 
-  def render_created(result)
-    render json: result, status: :created
+  def render_created(result, args = {})
+    render json: result, status: :created, **args
   end
 
   private
