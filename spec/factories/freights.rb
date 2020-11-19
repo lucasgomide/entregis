@@ -16,8 +16,8 @@ FactoryBot.define do
     weight_total { 1000 }
 
     after(:build) do |freight|
-      freight.origin = RgeoJsonHelpers.coordiantes_to_wkt(freight.origin)
-      freight.destination = RgeoJsonHelpers.coordiantes_to_wkt(freight.destination)
+      freight.origin = coordiantes_to_wkt(freight.origin)
+      freight.destination = coordiantes_to_wkt(freight.destination)
     end
   end
 end

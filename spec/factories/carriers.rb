@@ -43,10 +43,10 @@ FactoryBot.define do
     end
 
     after(:build) do |carrier|
-      carrier.current_location = RgeoJsonHelpers.coordiantes_to_wkt(
+      carrier.current_location = coordiantes_to_wkt(
         carrier.current_location
       )
-      carrier.coverage_area = RgeoJsonHelpers.coordiantes_to_wkt(
+      carrier.coverage_area = coordiantes_to_wkt(
         carrier.coverage_area, 'MultiPolygon'
       )
     end
