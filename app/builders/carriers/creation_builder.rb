@@ -1,37 +1,18 @@
 module Carriers
   class CreationBuilder
-    include Dry::Monads[:try]
     include Dry::Monads::Do.for(:build_attributes)
     include ::Concerns::Builder[Hash]
+    include ::Concerns::GeoJson
 
+    # TODO: Refactor attributes converters. It must be easy to convert them
+    # then set to the attributes.
     def build_attributes
-      if attributes[:current_location]
-        attributes[:current_location] = yield update_current_location
-      end
-      if attributes[:coverage_area]
-        attributes[:coverage_area] = yield update_coverate_area
-      end
+      cur_location, cov_area = attributes.slice(:current_location, :coverage_area).values
+
+      add(:coverage_area, (yield generate_multi_polygon(cov_area))) if cov_area
+      add(:current_location, (yield generate_point(cur_location))) if cur_location
+
       super
-    end
-
-    private
-
-    def decode_coordinates(type, coordinates)
-      Try[RGeo::Error::InvalidGeometry] do
-        RGeo::GeoJSON.decode({ type: type, coordinates: coordinates }.to_json)
-      end
-    end
-
-    def update_current_location
-      decode_coordinates(
-        'Point', attributes[:current_location]
-      )
-    end
-
-    def update_coverate_area
-      decode_coordinates(
-        'MultiPolygon', attributes[:coverage_area]
-      )
     end
   end
 end
