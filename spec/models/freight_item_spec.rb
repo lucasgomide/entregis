@@ -6,13 +6,11 @@ RSpec.describe FreightItem, type: :model do
 
   it do
     is_expected.to validate_numericality_of(:cubic_meters)
-      .only_integer
       .is_greater_than(0)
   end
 
   it do
     is_expected.to validate_numericality_of(:weight)
-      .only_integer
       .is_greater_than(0)
   end
 end
