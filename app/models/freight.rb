@@ -3,5 +3,5 @@ class Freight < ApplicationRecord
 
   validates :origin, :destination, :cubic_meters_total, :weight_total, presence: true
   validates :cubic_meters_total, :weight_total,
-            numericality: { only_integer: true, greater_than: 0 }
+            numericality: { greater_than: 0 }
 end
