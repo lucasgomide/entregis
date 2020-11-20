@@ -1,0 +1,10 @@
+en:
+  activerecord:
+    errors:
+      models:
+        carrier:
+          attributes:
+            available_cubic_meters:
+              exceeded_limit: "limit has exceeded. It should be less than or equal to the vehicle's limit"
+            available_payload:
+              exceeded_limit: "limit has exceeded. It should be less than or equal to the vehicle's limit"
