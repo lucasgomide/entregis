@@ -6,7 +6,7 @@ RSpec.describe Carriers::CreationBuilder, type: :builder do
     let(:valid_input) do
       {
         current_location: [1, 3],
-          coverage_area: [[[
+        coverage_area: [[[
           [-51.61376953125, -15.2490234375],
           [-39.92431640625, -15.6884765625],
           [-51.52587890625, -29.091796875],
@@ -14,7 +14,7 @@ RSpec.describe Carriers::CreationBuilder, type: :builder do
           [-56.97509765625, -13.8427734375],
           [-51.61376953125, -15.2490234375]
         ]]],
-        vehicle_id: vehicle.id,
+        vehicle_id: vehicle.id
       }
     end
     let(:vehicle) { create(:vehicle) }
