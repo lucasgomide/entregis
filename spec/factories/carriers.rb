@@ -20,6 +20,14 @@ FactoryBot.define do
       status { 'available' }
     end
 
+    trait :payload_full do
+      available_payload { 0 }
+    end
+
+    trait :full_storage do
+      available_cubic_meters { 0 }
+    end
+
     after(:build) do |carrier|
       carrier.current_location = coordiantes_to_wkt(
         carrier.current_location
