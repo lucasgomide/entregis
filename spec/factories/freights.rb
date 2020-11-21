@@ -19,5 +19,11 @@ FactoryBot.define do
       freight.origin = coordiantes_to_wkt(freight.origin)
       freight.destination = coordiantes_to_wkt(freight.destination)
     end
+
+    trait :with_items do
+      after(:create) do |freight|
+        freight.items = create_list(:freight_item, 3, freight: freight)
+      end
+    end
   end
 end
