@@ -1,6 +1,8 @@
 module Freights
   module Filters
     class DefaultOperation
+      include Dry::Monads[:result]
+
       # This method apply a sequence of default filters to find
       # the best carrier to pick up the order. The follow rules are applied:
       # - only available (not busy);
@@ -11,13 +13,15 @@ module Freights
       # carrier may not have the coverage area set. What should we do?
       def call(freight)
         origin, destination = freight.slice(:origin, :destination).values
-        Carrier.available.where(available_payload_cubic_meters(freight)).where(
+        carriers = Carrier.available.where(available_payload_cubic_meters(freight)).where(
           'ST_Contains(carriers.coverage_area, ST_GeomFromText(:origin))',
           origin: origin.to_s
         ).where(
           'ST_Contains(carriers.coverage_area, ST_GeomFromText(:destination))',
           destination: destination.to_s
         )
+
+        Success(carriers)
       end
 
       private
