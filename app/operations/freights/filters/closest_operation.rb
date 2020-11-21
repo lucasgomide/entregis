@@ -1,6 +1,6 @@
 module Freights
   module Filters
-    class DistanceOperation
+    class ClosestOperation
       include Dry::Monads[:result]
       include Dry::Monads::Do.for(:call)
       include Entregis::Deps[

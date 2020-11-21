@@ -1,4 +1,4 @@
-RSpec.describe Freights::Filters::DistanceOperation, type: :operation do
+RSpec.describe Freights::Filters::ClosestOperation, type: :operation do
   subject(:operation) { described_class.new }
   let(:default_operation) { instance_spy(Freights::Filters::DefaultOperation) }
 
