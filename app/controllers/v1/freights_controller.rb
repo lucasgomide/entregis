@@ -9,5 +9,16 @@ module V1
         m.failure(&method(:render_invalid))
       end
     end
+
+    def search_carriers
+      success = lambda do |body|
+        render_success(body, each_serializer: SearchFreightCarrierSerializer)
+      end
+
+      operation do |m|
+        m.success(&success)
+        m.failure(&method(:render_invalid))
+      end
+    end
   end
 end
