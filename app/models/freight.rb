@@ -5,5 +5,5 @@ class Freight < ApplicationRecord
   validates :cubic_meters_total, :weight_total,
             numericality: { greater_than: 0 }
 
-  has_many :items, class_name: 'FreightItem'
+  has_many :items, class_name: 'FreightItem', dependent: :destroy
 end
