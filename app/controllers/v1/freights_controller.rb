@@ -17,6 +17,15 @@ module V1
       end
     end
 
+    def show
+      success = ->(body) { render_success(body, include: ['items']) }
+
+      operation do |m|
+        m.success(&success)
+        m.failure(&method(:render_invalid))
+      end
+    end
+
     def search_carriers
       success = lambda do |body|
         render_success(body, each_serializer: SearchFreightCarrierSerializer)
