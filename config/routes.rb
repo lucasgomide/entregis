@@ -4,8 +4,7 @@ Rails.application.routes.draw do
       resources :carriers
     end
 
-    # TODO: Support to detail a freight
-    resources :freights, only: %i[create destroy] do
+    resources :freights, only: %i[create destroy show] do
       member do
         get :search_carriers
       end

@@ -4,6 +4,7 @@ RSpec.describe V1::FreightsController, type: :controller do
   let(:create_operation) { instance_spy(Freights::CreateOperation) }
   let(:search_carriers_operation) { instance_spy(Freights::SearchCarriersOperation) }
   let(:destroy_operation) { instance_spy(Freights::DestroyOperation) }
+  let(:detail_operation) { instance_spy(Freights::DetailOperation) }
 
   let(:error_factory) { instance_spy(ErrorFactory) }
 
@@ -12,6 +13,7 @@ RSpec.describe V1::FreightsController, type: :controller do
     Entregis::Container.stub('freights.search_carriers_operation',
                              search_carriers_operation)
     Entregis::Container.stub('freights.destroy_operation', destroy_operation)
+    Entregis::Container.stub('freights.detail_operation', detail_operation)
     Entregis::Container.stub('error_factory', error_factory)
   end
 
@@ -87,5 +89,19 @@ RSpec.describe V1::FreightsController, type: :controller do
     end
 
     include_examples 'DELETE destroy resource'
+  end
+
+  describe 'GET show' do
+    subject(:get_show) { get :show, params: params, format: :json }
+    let(:params) { { 'id': resource.id.to_s } }
+    let(:resource) { create(:freight, :with_items) }
+    let(:serializer) { V1::FreightSerializer }
+    let(:included) { ['items'] }
+
+    before do
+      allow(detail_operation).to receive(:call).and_return(result)
+    end
+
+    include_examples 'GET show resource'
   end
 end
