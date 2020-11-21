@@ -3,6 +3,7 @@
 RSpec.describe V1::FreightsController, type: :controller do
   let(:create_operation) { instance_spy(Freights::CreateOperation) }
   let(:search_carriers_operation) { instance_spy(Freights::SearchCarriersOperation) }
+  let(:destroy_operation) { instance_spy(Freights::DestroyOperation) }
 
   let(:error_factory) { instance_spy(ErrorFactory) }
 
@@ -10,6 +11,7 @@ RSpec.describe V1::FreightsController, type: :controller do
     Entregis::Container.stub('freights.create_operation', create_operation)
     Entregis::Container.stub('freights.search_carriers_operation',
                              search_carriers_operation)
+    Entregis::Container.stub('freights.destroy_operation', destroy_operation)
     Entregis::Container.stub('error_factory', error_factory)
   end
 
@@ -72,5 +74,18 @@ RSpec.describe V1::FreightsController, type: :controller do
 
       it { is_expected.to have_http_status(:bad_request) }
     end
+  end
+
+  describe 'DELETE destroy' do
+    subject(:delete_destroy) { delete :destroy, params: params, format: :json }
+    let(:params) { { 'id': '1' } }
+    let(:resource) { create(:freight) }
+    let(:serializer) { V1::FreightSerializer }
+
+    before do
+      allow(destroy_operation).to receive(:call).and_return(result)
+    end
+
+    include_examples 'DELETE destroy resource'
   end
 end
