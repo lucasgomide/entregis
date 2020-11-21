@@ -1,6 +1,6 @@
 module Freights
   module Filters
-    class CheaperOperation
+    class CheapestOperation
       include Dry::Monads::Do.for(:call)
       include Dry::Monads[:result]
       include Entregis::Deps[
