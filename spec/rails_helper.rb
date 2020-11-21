@@ -71,7 +71,7 @@ RSpec.configure do |config|
     Entregis::Container.enable_stubs!
   end
 
-  %i[operation controllers contract].each do |type|
+  %i[operation controllers contract filters].each do |type|
     config.include_context 'with container_stubs', include_shared: true, type: type
   end
 
