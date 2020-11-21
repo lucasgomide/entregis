@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     end
 
     resources :freights, only: %i[create destroy show] do
+      resources :items, controller: :freight_items
+
       member do
         get :search_carriers
       end
