@@ -1,6 +1,8 @@
 module Freights
   module Filters
     class DistanceOperation
+      include Dry::Monads[:result]
+      include Dry::Monads::Do.for(:call)
       include Entregis::Deps[
         base_filter: 'freights.filters.default_operation',
       ]
@@ -9,11 +11,11 @@ module Freights
       # After call the base_filter the result is ordered by distance of the
       # carries' current_location with the freight's origin location
       def call(freight)
-        base_filter.call(freight).order(
-          Arel.sql(
-            "ST_Distance(ST_GeomFromText('#{freight.origin}'), carriers.current_location)"
-          )
+        query = Arel.sql(
+          "ST_Distance(ST_GeomFromText('#{freight.origin}'), carriers.current_location)"
         )
+        result = yield base_filter.call(freight)
+        Success(result.order(query))
       end
     end
   end

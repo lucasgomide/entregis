@@ -1,5 +1,10 @@
 RSpec.describe Freights::Filters::DistanceOperation, type: :operation do
   subject(:operation) { described_class.new }
+  let(:default_operation) { instance_spy(Freights::Filters::DefaultOperation) }
+
+  let(:app_container_stubs) do
+    Entregis::Container.stub('freights.filters.default_operation', default_operation)
+  end
 
   describe '.call' do
     subject(:call) { operation.call(freight) }
@@ -14,73 +19,34 @@ RSpec.describe Freights::Filters::DistanceOperation, type: :operation do
       )
     end
 
-    let(:vehicle) do
-      create(
-        :vehicle,
-        cubic_meters_capacity: freight.cubic_meters_total * 2,
-        payload_capacity: freight.weight_total * 2
-      )
-    end
+    let(:filter_result) { success(Carrier.all) }
 
-    before { carriers }
-
-    include_examples 'testing default list filter'
-
-    let(:coverage_area_1) do
-      [[[
-        [-44.35798645019531, -18.324218204529696],
-        [-44.29893493652344, -18.45974509543414],
-        [-44.219627380371094, -18.38091789856933],
-        [-44.29618835449219, -18.314766446928143],
-        [-44.35798645019531, -18.324218204529696]
-      ]]]
-    end
-
-    let(:coverage_area_2) do
-      [[[
-        [-44.33326721191406, -18.305640122258644],
-        [-44.344940185546875, -18.391669187688752],
-        [-44.25464630126953, -18.420661743842945],
-        [-44.247779846191406, -18.306292018544276],
-        [-44.33326721191406, -18.305640122258644]
-      ]]]
-    end
-
-    let(:coverage_area_3) do
-      [[[
-        [-44.468536376953125, -18.345075428248094],
-        [-44.436607360839844, -18.415124217111945],
-        [-44.463043212890625, -18.318025732001438],
-        [-44.468536376953125, -18.345075428248094]
-      ]]]
+    before do
+      carriers
+      allow(default_operation).to receive(:call).and_return(filter_result)
     end
 
     let(:carriers) do
       carrier_1
       carrier_3
       carrier_2
-      create(:carrier, coverage_area: nil, vehicle: vehicle)
-      create(:carrier, coverage_area: coverage_area_3, vehicle: vehicle)
     end
 
     let(:carrier_1) do
       create(
-        :carrier, coverage_area: coverage_area_2, vehicle: vehicle,
-                  current_location: [-44.31404113769531, -18.33334354949917]
+        :carrier, current_location: [-44.31404113769531, -18.33334354949917]
       )
     end
 
     let(:carrier_2) do
       create(
-        :carrier, coverage_area: coverage_area_1, vehicle: vehicle,
-                  current_location: [-44.261856079101555, -18.366907637185466]
+        :carrier, current_location: [-44.261856079101555, -18.366907637185466]
       )
     end
 
     let(:carrier_3) do
       create(
-        :carrier, coverage_area: coverage_area_2, vehicle: vehicle,
-                  current_location: [-44.314727783203125, -18.388085499159203]
+        :carrier, current_location: [-44.314727783203125, -18.388085499159203]
       )
     end
 
@@ -89,7 +55,14 @@ RSpec.describe Freights::Filters::DistanceOperation, type: :operation do
     end
 
     it do
-      expect(call.map(&:id)).to eql(valid_carriers.map(&:id))
+      call
+      expect(default_operation).to have_received(:call).with(freight)
+    end
+
+    it { is_expected.to be_success }
+
+    it do
+      expect(call.value!.map(&:id)).to eql(valid_carriers.map(&:id))
     end
   end
 end
