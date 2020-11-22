@@ -28,7 +28,7 @@ module Freights
       filter = filter_factory.from_sort_type(contract[:sort])
 
       result = yield filter.call(resource)
-      paginate.call(result, contract.slice(:page))
+      paginate.call(result.includes(:shipping_carrier), contract.slice(:page))
     end
 
     private

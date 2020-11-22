@@ -24,13 +24,14 @@ RSpec.describe Freights::SearchCarriersOperation, type: :operation do
     let(:valid_input) { input }
     let(:factory) { instance_spy(Freights::CheapestFilter) }
 
-    let(:carriers) { create_list(:carrier, 2) }
+    let(:carriers) { Carrier.all }
 
     let(:contract_result) { validation_contract(input: valid_input) }
     let(:filter_result) { success(carriers) }
     let(:paginate_result) { success(carriers.take(1)) }
 
     before do
+      create_list(:carrier, 2)
       allow(search_carrier_contract).to receive(:call).and_return(contract_result)
       allow(filter_factory).to receive(:from_sort_type).and_return(factory)
       allow(factory).to receive(:call).and_return(filter_result)
