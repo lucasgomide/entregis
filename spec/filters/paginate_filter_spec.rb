@@ -15,9 +15,9 @@ RSpec.describe PaginateFilter, type: :filters do
     end
 
     context 'paginate with provided attributes' do
-      let(:input) { { per_page: 1, page: 3 } }
-      its(:'success.limit_value') { is_expected.to eql(input[:per_page]) }
-      its(:'success.current_page') { is_expected.to eql(input[:page]) }
+      let(:input) { { page: { size: 1, number: 3 } } }
+      its(:'success.limit_value') { is_expected.to eql(input[:page][:size]) }
+      its(:'success.current_page') { is_expected.to eql(input[:page][:number]) }
     end
   end
 end

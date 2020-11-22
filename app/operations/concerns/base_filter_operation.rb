@@ -14,8 +14,8 @@ module BaseFilterOperation
 
     def call(input)
       parameters = (yield contract.call(input).to_monad).to_h
-      result = yield paginate.call(model, parameters.slice(:page, :per_page))
-      Success(result.where(parameters.except(:page, :per_page)))
+      result = yield paginate.call(model, parameters.slice(:page))
+      Success(result.where(parameters.except(:page)))
     end
   end
 end

@@ -19,8 +19,8 @@ RSpec.describe Carriers::ListOperation, type: :operation do
     let(:paginate_result) { success(Carrier.all) }
     let(:contract_result) { validation_contract(input: valid_input) }
 
-    let(:input) { { ignored: 'abcs', per_page: 99, page: 1 } }
-    let(:valid_input) { { per_page: 99, page: 1 } }
+    let(:input) { { ignored: 'abcs', page: { size: 99, number: 1 } } }
+    let(:valid_input) { { page: { size: 99, number: 1 } } }
 
     before do
       allow(paginate_filter).to receive(:call).and_return(paginate_result)
@@ -36,7 +36,7 @@ RSpec.describe Carriers::ListOperation, type: :operation do
     it do
       call
       expect(paginate_filter).to have_received(:call)
-        .with(Carrier, input.slice(:per_page, :page))
+        .with(Carrier, input.slice(:page))
     end
 
     it do
