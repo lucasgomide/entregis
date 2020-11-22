@@ -6,7 +6,7 @@ module ShippingCarriers
     ]
 
     def model
-      ShippingCarrier
+      ShippingCarrier.includes(:carriers)
     end
   end
 end
