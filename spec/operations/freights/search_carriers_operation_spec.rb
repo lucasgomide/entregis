@@ -17,8 +17,7 @@ RSpec.describe Freights::SearchCarriersOperation, type: :operation do
       {
         id: freight.id,
         sort: 'sort-method',
-        page: 1,
-        per_page: 10
+        page: { size: 10, number: 1 }
       }
     end
 
@@ -58,7 +57,7 @@ RSpec.describe Freights::SearchCarriersOperation, type: :operation do
     it do
       call
       expect(paginate_filter).to have_received(:call)
-        .with(filter_result.value!, input.slice(:page, :per_page))
+        .with(filter_result.value!, input.slice(:page))
     end
 
     context 'when contract validation has failed' do

@@ -7,9 +7,10 @@ class PaginateFilter
   DEFAULT_PAGE_SIZE = 30
 
   def call(model, attrs = {})
+    size, number = attrs.fetch(:page, {}).slice(:size, :number).values
     Success(
-      model.page(attrs[:page] || DEFAULT_PAGE)
-          .per(attrs[:per_page] || DEFAULT_PAGE_SIZE)
+      model.page(number || DEFAULT_PAGE)
+          .per(size || DEFAULT_PAGE_SIZE)
     )
   end
 end
