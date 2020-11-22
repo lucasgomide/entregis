@@ -10,7 +10,9 @@ RSpec.describe ShippingCarriers::ListOperation, type: :operation do
 
   describe '.model' do
     subject(:model) { operation.model }
-    it { is_expected.to eql(ShippingCarrier) }
+
+    its(:klass) { is_expected.to eq(ShippingCarrier) }
+    its(:includes_values) { is_expected.to eql([:carriers]) }
   end
 
   describe '.call' do
@@ -36,7 +38,7 @@ RSpec.describe ShippingCarriers::ListOperation, type: :operation do
     it do
       call
       expect(paginate_filter).to have_received(:call)
-        .with(ShippingCarrier, input.slice(:page))
+        .with(ShippingCarrier.includes(:carriers), input.slice(:page))
     end
 
     it do
