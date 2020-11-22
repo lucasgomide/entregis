@@ -1,4 +1,5 @@
 # Creating shipment modes
+puts 'Creating shipment modes'
 
 [
  { name: 'Rodoviário', cube_factor: 300 },
@@ -8,6 +9,7 @@
 
 
 # Creating vehicles
+puts 'Creating vehicles'
 
 shipment_mode = ShipmentMode.find_by(name: 'Rodoviário')
 
@@ -18,54 +20,114 @@ shipment_mode = ShipmentMode.find_by(name: 'Rodoviário')
 ].map { |vehicle| shipment_mode.vehicles.find_or_create_by!(vehicle) }
 
 # Creating shipping carriers
+puts 'Creating shipping carriers'
+
 shipping_carrier = ShippingCarrier.find_or_create_by!(name: 'Rapi10', document: '123456')
 
 # Creating carriers
+puts 'Creating carriers'
+
 vehicle = Vehicle.first
 
-current_location = RGeo::GeoJSON.decode({
-  type: 'Point',
-  coordinates: [
-    -46.669921875,
-    -23.57666015625
-  ]
-}.to_json).to_s
-
-coverage_area = RGeo::GeoJSON.decode({
-  type: 'MultiPolygon',
-  coordinates: [
-    [
-      [
-        [
-          -51.3720703125,
-          -24.510498046875
-        ],
-        [
-          -48.592529296875,
-          -25.191650390625
-        ],
-        [
-          -49.207763671875,
-          -26.69677734375
-        ],
-        [
-          -51.998291015625,
-          -25.982666015625
-        ],
-        [
-          -51.3720703125,
-          -24.510498046875
-        ]
-      ]
-    ]
-  ]
-}.to_json).to_s
-
-
-shipping_carrier.carriers.available.create!(
+carriers = [{
+  available_payload: vehicle.payload_capacity,
+  available_cubic_meters: vehicle.cubic_meters_capacity,
   km_price_cents: 30,
   weight_price_cents: 400,
-  current_location: current_location,
-  coverage_area: coverage_area,
+  current_location: RGeo::GeoJSON.decode({
+    type: 'Point',
+    coordinates: [
+      -44.154052734375,
+      -18.318025732001438
+    ]
+  }.to_json),
+  coverage_area: RGeo::GeoJSON.decode({
+    type: 'MultiPolygon',
+    coordinates: [[[
+      [-44.358673095703125, -18.418381607361148],
+      [-44.560546875, -18.4704914579668],
+      [-44.361419677734375, -18.59939520219874],
+      [-44.023590087890625, -18.340187242207897],
+      [-44.2364501953125, -18.241090255870276],
+      [-44.358673095703125, -18.418381607361148]
+    ]]]
+  }.to_json),
   vehicle: vehicle
-)
+}, {
+  available_payload: vehicle.payload_capacity,
+  available_cubic_meters: vehicle.cubic_meters_capacity,
+  km_price_cents: 1000,
+  weight_price_cents: 800,
+  current_location: RGeo::GeoJSON.decode({
+    type: 'Point',
+    coordinates: [
+      -44.37103271484374,
+      -18.534304453676853
+    ]
+  }.to_json),
+  coverage_area: RGeo::GeoJSON.decode({
+    type: 'MultiPolygon',
+    coordinates: [[[
+      [-44.358673095703125, -18.418381607361148],
+      [-44.560546875, -18.4704914579668],
+      [-44.361419677734375, -18.59939520219874],
+      [-44.023590087890625, -18.340187242207897],
+      [-44.2364501953125, -18.241090255870276],
+      [-44.358673095703125, -18.418381607361148]
+    ]]]
+  }.to_json),
+  vehicle: vehicle
+}, {
+  available_payload: vehicle.payload_capacity,
+  available_cubic_meters: vehicle.cubic_meters_capacity,
+  km_price_cents: 1000,
+  weight_price_cents: 800,
+  current_location: RGeo::GeoJSON.decode({
+    type: 'Point',
+    coordinates: [
+      -44.86473083496094,
+      -18.126928351410527
+    ]
+  }.to_json),
+  coverage_area: RGeo::GeoJSON.decode({
+    type: 'MultiPolygon',
+    coordinates: [[[
+      [-45.0933837890625,-17.978733095556155],
+      [-45.1318359375,-18.20848019603987],
+      [-45.010986328125,-18.140631722312715],
+      [-44.95880126953125,-18.22413378742241],
+      [-44.8187255859375,-18.117139572348528],
+      [-45.06317138671875,-17.936928637549432],
+      [-45.0933837890625,-17.978733095556155]
+    ]]]
+  }.to_json),
+  vehicle: vehicle
+}, {
+  available_payload: vehicle.payload_capacity,
+  available_cubic_meters: vehicle.cubic_meters_capacity,
+  km_price_cents: 1000,
+  weight_price_cents: 800,
+  current_location: RGeo::GeoJSON.decode({
+    type: 'Point',
+    coordinates:  [
+      -45.0604248046875,
+      -17.95391289081594
+    ]
+  }.to_json),
+  coverage_area: RGeo::GeoJSON.decode({
+    type: 'MultiPolygon',
+    coordinates: [[[
+      [-45.0933837890625,-17.978733095556155],
+      [-45.1318359375,-18.20848019603987],
+      [-45.010986328125,-18.140631722312715],
+      [-44.95880126953125,-18.22413378742241],
+      [-44.8187255859375,-18.117139572348528],
+      [-45.06317138671875,-17.936928637549432],
+      [-45.0933837890625,-17.978733095556155]
+    ]]]
+  }.to_json),
+  vehicle: vehicle
+}]
+
+shipping_carrier.carriers.available.create!(carriers)
+
