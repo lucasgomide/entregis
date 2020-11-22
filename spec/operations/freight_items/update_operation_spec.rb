@@ -1,9 +1,12 @@
 RSpec.describe FreightItems::UpdateOperation, type: :operation do
   subject(:operation) { described_class.new }
   let(:updating_contract) { instance_spy(FreightItems::UpdatingContract) }
+  let(:update_freight_total) { instance_spy(FreightItems::UpdateFreightTotalOperation) }
 
   let(:app_container_stubs) do
     Entregis::Container.stub('freight_items.updating_contract', updating_contract)
+    Entregis::Container.stub('freight_items.update_freight_total_operation',
+                             update_freight_total)
   end
 
   describe '.call' do
@@ -64,11 +67,18 @@ RSpec.describe FreightItems::UpdateOperation, type: :operation do
       it { is_expected.to be_success.with(resource) }
 
       it do
-        expect { call }.to change { resource.reload.cubic_meters }.to(input[:cubic_meters])
+        expect { call }.to change { resource.reload.cubic_meters }
+          .to(input[:cubic_meters])
       end
 
       it do
         expect { call }.to change { resource.reload.weight }.to(input[:weight])
+      end
+
+      it do
+        call
+        expect(update_freight_total).to have_received(:call)
+          .with(an_instance_of(FreightItem))
       end
     end
   end

@@ -1,9 +1,12 @@
 RSpec.describe FreightItems::DestroyOperation, type: :operation do
   subject(:operation) { described_class.new }
   let(:deleting_contract) { instance_spy(FreightItems::DeletingContract) }
+  let(:update_freight_total) { instance_spy(FreightItems::UpdateFreightTotalOperation) }
 
   let(:app_container_stubs) do
     Entregis::Container.stub('freight_items.deleting_contract', deleting_contract)
+    Entregis::Container.stub('freight_items.update_freight_total_operation',
+                             update_freight_total)
   end
 
   describe '.call' do
@@ -42,6 +45,12 @@ RSpec.describe FreightItems::DestroyOperation, type: :operation do
 
       it do
         expect { call }.to change { FreightItem.count }.from(1).to(0)
+      end
+
+      it do
+        call
+        expect(update_freight_total).to have_received(:call)
+          .with(an_instance_of(FreightItem))
       end
     end
   end

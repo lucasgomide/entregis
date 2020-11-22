@@ -1,9 +1,12 @@
 RSpec.describe FreightItems::CreateOperation, type: :operation do
   subject(:operation) { described_class.new }
   let(:creation_contract) { instance_spy(FreightItems::CreationContract) }
+  let(:update_freight_total) { instance_spy(FreightItems::UpdateFreightTotalOperation) }
 
   let(:app_container_stubs) do
     Entregis::Container.stub('freight_items.creation_contract', creation_contract)
+    Entregis::Container.stub('freight_items.update_freight_total_operation',
+                             update_freight_total)
   end
 
   describe '.call' do
@@ -14,7 +17,7 @@ RSpec.describe FreightItems::CreateOperation, type: :operation do
       {
         freight_id: freight.id,
         cubic_meters: 12,
-        weight: 100,
+        weight: 100
       }
     end
 
@@ -56,6 +59,12 @@ RSpec.describe FreightItems::CreateOperation, type: :operation do
 
       it do
         expect { call }.to change { FreightItem.count }.by(1)
+      end
+
+      it do
+        call
+        expect(update_freight_total).to have_received(:call)
+          .with(an_instance_of(FreightItem))
       end
     end
   end
