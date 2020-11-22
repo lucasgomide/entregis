@@ -12,10 +12,16 @@ RSpec.describe FreightItems::UpdatingContract, type: :contract do
     end
 
     context 'when the provided input is valid' do
-      let(:input) { { id: 10, freight_id: 1, weight: 12, cubic_meters: 232, ignored: true } }
+      let(:input) do
+        { id: 10, freight_id: 1, weight: 12,
+          cubic_meters: 232, ignored: true }
+      end
 
       its(:'errors.to_h') { is_expected.to be_empty }
-      its(:to_h) { is_expected.to eq(id: 10, freight_id: 1, weight: 12, cubic_meters: 232) }
+      its(:to_h) do
+        is_expected.to eq(id: 10, freight_id: 1, weight: 12,
+                          cubic_meters: 232)
+      end
     end
   end
 end
