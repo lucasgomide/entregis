@@ -4,6 +4,7 @@ RSpec.describe V1::FreightItemsController, type: :controller do
   let(:detail_operation) { instance_spy(FreightItems::DetailOperation) }
   let(:destroy_operation) { instance_spy(FreightItems::DestroyOperation) }
   let(:create_operation) { instance_spy(FreightItems::CreateOperation) }
+  let(:update_operation) { instance_spy(FreightItems::UpdateOperation) }
 
   let(:error_factory) { instance_spy(ErrorFactory) }
 
@@ -11,6 +12,7 @@ RSpec.describe V1::FreightItemsController, type: :controller do
     Entregis::Container.stub('freight_items.detail_operation', detail_operation)
     Entregis::Container.stub('freight_items.destroy_operation', destroy_operation)
     Entregis::Container.stub('freight_items.create_operation', create_operation)
+    Entregis::Container.stub('freight_items.update_operation', update_operation)
     Entregis::Container.stub('error_factory', error_factory)
   end
 
@@ -51,5 +53,18 @@ RSpec.describe V1::FreightItemsController, type: :controller do
     end
 
     include_examples 'POST create resource'
+  end
+
+  describe 'PUT update' do
+    subject(:put_update) { put :update, params: params, format: :json }
+    let(:params) { { 'freight_id': '1', 'id': '1' } }
+    let(:resource) { create(:freight_item) }
+    let(:serializer) { V1::FreightItemSerializer }
+
+    before do
+      allow(update_operation).to receive(:call).and_return(result)
+    end
+
+    include_examples 'PUT update resource'
   end
 end
