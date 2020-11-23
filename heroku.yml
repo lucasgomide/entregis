@@ -4,6 +4,8 @@ setup:
       as: DATABASE
     - plan: newrelic:wayne
       as: NEW_RELIC
+    - plan: sentry:f1
+      as: SENTRY
 
   config:
     RACK_ENV: production
