@@ -12,5 +12,9 @@ build:
     web: Dockerfile
   config:
     BUNDLE_INSTALL_ARGS: --jobs 10 --retry=3 --without development test
+release:
+  image: web
+  command:
+    - bundle exec rails db:migrate
 run:
   web: bundle exec puma -C config/puma.rb
