@@ -22,7 +22,9 @@ services:
     ports:
       - 3000:3000
     environment:
-      DATABASE_URL: postgis://postgres:password@db:5432/entregis
       BUNDLE_PATH: /bundle/vendor
+      DATABASE_PASSWORD: password
+      DATABASE_USERNAME: postgres
+      DATABASE_HOST: db
 volumes:
   bundle_path:
