@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_19_222425) do
+ActiveRecord::Schema.define(version: 2020_11_23_184757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,14 +70,7 @@ ActiveRecord::Schema.define(version: 2020_11_19_222425) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "shipping_carriers", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "document", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "shippments", force: :cascade do |t|
+  create_table "shipments", force: :cascade do |t|
     t.integer "price_cents", default: 0, null: false
     t.string "price_currency", default: "BRL", null: false
     t.string "status", null: false
@@ -87,9 +80,16 @@ ActiveRecord::Schema.define(version: 2020_11_19_222425) do
     t.bigint "carrier_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["carrier_id"], name: "index_shippments_on_carrier_id"
-    t.index ["customer_id"], name: "index_shippments_on_customer_id"
-    t.index ["freight_id"], name: "index_shippments_on_freight_id"
+    t.index ["carrier_id"], name: "index_shipments_on_carrier_id"
+    t.index ["customer_id"], name: "index_shipments_on_customer_id"
+    t.index ["freight_id"], name: "index_shipments_on_freight_id"
+  end
+
+  create_table "shipping_carriers", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "document", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "vehicles", force: :cascade do |t|
@@ -116,8 +116,8 @@ ActiveRecord::Schema.define(version: 2020_11_19_222425) do
   add_foreign_key "carriers", "shipping_carriers"
   add_foreign_key "carriers", "vehicles"
   add_foreign_key "freight_items", "freights"
-  add_foreign_key "shippments", "carriers"
-  add_foreign_key "shippments", "customers"
-  add_foreign_key "shippments", "freights"
+  add_foreign_key "shipments", "carriers"
+  add_foreign_key "shipments", "customers"
+  add_foreign_key "shipments", "freights"
   add_foreign_key "vehicles", "shipment_modes"
 end

@@ -1,4 +1,4 @@
-RSpec.describe Shippment, type: :model do
+RSpec.describe Shipment, type: :model do
   it { is_expected.to be_versioned }
   it { is_expected.to validate_presence_of(:price_cents) }
   it { is_expected.to validate_presence_of(:status) }

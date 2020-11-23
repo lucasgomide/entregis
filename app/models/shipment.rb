@@ -1,4 +1,4 @@
-class Shippment < ApplicationRecord
+class Shipment < ApplicationRecord
   has_paper_trail
 
   belongs_to :customer
