@@ -2,13 +2,16 @@ default: &default
   adapter: postgis
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
-  url: <%= ENV['DATABASE_URL'] %>
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: <%= ENV['DATABASE_HOST'] %>
 
-development: &development
+development:
   <<: *default
+  database: entregis
 
 test:
-  <<: *development
+  <<: *default
   database: entregis_test
 
 production:

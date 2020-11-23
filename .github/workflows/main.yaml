@@ -81,9 +81,13 @@ jobs:
         run: |
           bundle exec rails db:create db:schema:load
         env:
-          DATABASE_URL: postgis://postgres:postgres@localhost:5432/entregis
+          DATABASE_PASSWORD: postgres
+          DATABASE_USERNAME: postgres
+          DATABASE_HOST: localhost
 
       - name: Unit test with Rspec test suite
         run: bundle exec rspec --format progress --profile
         env:
-          DATABASE_URL: postgis://postgres:postgres@localhost:5432/entregis
+          DATABASE_PASSWORD: postgres
+          DATABASE_USERNAME: postgres
+          DATABASE_HOST: localhost
