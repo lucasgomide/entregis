@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :shippment do
+  factory :shipment do
     customer { create(:customer) }
     freight { create(:freight) }
     carrier { create(:carrier) }
