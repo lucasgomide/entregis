@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'active_model_serializers'
 gem 'activerecord-postgis-adapter'
+gem 'cpf_cnpj'
 gem 'dry-matcher'
 gem 'dry-monads'
 gem 'dry-rails'

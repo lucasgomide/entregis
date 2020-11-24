@@ -60,6 +60,7 @@ GEM
       activesupport
     coderay (1.1.3)
     concurrent-ruby (1.1.6)
+    cpf_cnpj (0.5.0)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     crass (1.0.6)
@@ -319,6 +320,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   activerecord-postgis-adapter
+  cpf_cnpj
   dry-matcher
   dry-monads
   dry-rails
