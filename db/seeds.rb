@@ -117,13 +117,11 @@ carriers = [{
   coverage_area: RGeo::GeoJSON.decode({
     type: 'MultiPolygon',
     coordinates: [[[
-      [-45.0933837890625,-17.978733095556155],
-      [-45.1318359375,-18.20848019603987],
-      [-45.010986328125,-18.140631722312715],
-      [-44.95880126953125,-18.22413378742241],
-      [-44.8187255859375,-18.117139572348528],
-      [-45.06317138671875,-17.936928637549432],
-      [-45.0933837890625,-17.978733095556155]
+      [-44.33326721191406,-18.305640122258644],
+      [-44.344940185546875,-18.391669187688752],
+      [-44.25464630126953,-18.420661743842945],
+      [-44.247779846191406,-18.306292018544276],
+      [-44.33326721191406,-18.305640122258644]
     ]]]
   }.to_json),
   vehicle: vehicle
@@ -131,3 +129,23 @@ carriers = [{
 
 shipping_carrier.carriers.available.create!(carriers)
 
+# Creating freight
+puts 'Creating freight'
+
+freight = Freight.create!(
+  origin: RGeo::GeoJSON.decode({
+    type: 'Point',
+    coordinates:  [-44.327774047851555, -18.34279429196909]
+  }.to_json),
+  destination: RGeo::GeoJSON.decode({
+    type: 'Point',
+    coordinates:  [-44.2790, -18.4014]
+  }.to_json),
+  cubic_meters_total: 10.1,
+  weight_total: 10.2,
+)
+
+freight.items.create!([{
+  cubic_meters: 10.1,
+  weight: 10.2
+}])
