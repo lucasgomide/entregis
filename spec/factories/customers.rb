@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :customer do
     name { 'Magic Buzz' }
-    document { '1234567821x' }
+    sequence(:document) { |x| "00#{x}x" }
   end
 end
