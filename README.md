@@ -119,7 +119,7 @@ This project is using RSpec on test suite.
 At first, you must create the test database
 
 ```bash
-$ docker-compose run --rm -e RAILS_ENV=test web bundle exec rails db:create
+$ docker-compose run --rm -e RAILS_ENV=test web bundle exec rails db:create db:migrate
 ```
 
 #### Usage
