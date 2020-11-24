@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :shipping_carrier do
     name { 'Douglas Adams' }
-    document { '1234567821x' }
+    sequence(:document) { |n| "#{n}x" }
 
     trait :with_carriers do
       after(:create) do |shipping_carrier|
