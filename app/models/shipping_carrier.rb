@@ -5,4 +5,6 @@ class ShippingCarrier < ApplicationRecord
   # In the future, the carriers can not be deleted if any
   # shipment has associeted.
   has_many :carriers, dependent: :destroy
+
+  validates :document, uniqueness: true
 end
